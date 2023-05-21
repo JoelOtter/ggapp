@@ -1,0 +1,28 @@
+query listGamesForStatuses($statusIds: [ID], $offset: Int, $userId: ID, $limit: Int) {
+    listGamesForStatuses(
+        statusIds: $statusIds
+        offset: $offset
+        userId: $userId
+        limit: $limit
+    ) {
+        game {
+            id
+            name
+            description
+            slug
+            token
+            coverPath
+            headerPath
+            currentUserGamePlayStatus {
+                id
+                playStatus {
+                    id
+                }
+            }
+        }
+        playStatus {
+            id
+            title
+        }
+    }
+}

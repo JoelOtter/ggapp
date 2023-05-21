@@ -1,0 +1,679 @@
+schema {
+  query: RootQueryType
+  mutation: RootMutationType
+}
+
+type Activity {
+  currentUserGamePlayStatus: CurrentUserGamePlayStatus
+  currentUserPlayStatus: PlayStatus
+  game: Game
+  id: Int
+  playStatus: PlayStatus
+  timestamp: String
+  user: User
+}
+
+type AlternativeName {
+  id: ID
+  name: String
+  type: String
+}
+
+type AverageRating {
+  game: Game
+  id: Int
+  insertedAt: String
+  updatedAt: String
+  value: Float
+}
+
+input BacklogFilter {
+  gameId: ID
+  platforms: [ID]
+  userId: ID
+}
+
+type BacklogGame {
+  game: Game
+  gameId: Int
+  id: Int
+  position: Int
+}
+
+input BacklogOrder {
+  direction: SortOrder = DESC
+  field: BacklogOrderValue = POSITION
+}
+
+enum BacklogOrderValue {
+  GAME_NAME
+  POSITION
+}
+
+input CollectionFilter {
+  platforms: [ID]
+  userId: ID!
+}
+
+type CollectionGame {
+  game: Game
+  gameId: Int
+  id: Int
+}
+
+input CollectionOrder {
+  direction: SortOrder = DESC
+  field: CollectionOrderValue = GAME_NAME
+}
+
+enum CollectionOrderValue {
+  GAME_NAME
+  GAME_RATING
+  USER_RATING
+}
+
+type Company {
+  description: String
+  id: ID
+  name: String
+  slug: String
+}
+
+type CompanyRole {
+  description: String
+  id: ID
+  name: String
+  slug: String
+}
+
+type Cover {
+  caption: String
+  gameId: ID
+  id: ID
+  path: String
+}
+
+type CurrentUserGamePlayStatus {
+  id: Int
+  playStatus: PlayStatus
+}
+
+type Follower {
+  followerCount: Int
+  followingCount: Int
+  isFollowingUser: Boolean
+  user: User
+}
+
+type Game {
+  cover: GameImage
+  coverPath: String
+  currentUserGamePlayStatus: CurrentUserGamePlayStatus
+  description: String
+  gameAlternativeNames: [AlternativeName]
+  gameCompanies: [GameCompany]
+  gameContentScore: GameContentScore
+  gameCovers: [Cover]
+  gameGenres: [GameGenre]
+  gameLinks: [Link]
+  gameReleaseDates: [ReleaseDate]
+  gameScreenshots: [Screenshot]
+  gameStores: [GameStore]
+  headerPath: String
+  id: Int
+  name: String
+  ratingCount: Int
+  releaseDates: [GameReleaseDate]
+  screenshots: [GameImage]
+  slug: String
+  token: String
+  videos: [GameVideo]
+}
+
+type GameCompany {
+  company: Company
+  companyId: ID
+  companyRole: CompanyRole
+  companyRoleId: ID
+  gameId: ID
+  id: ID
+}
+
+type GameContentScore {
+  value: Int
+}
+
+input GameCoverInput {
+  caption: String
+  gameId: ID!
+  id: ID
+  path: String!
+}
+
+type GameGenre {
+  gameId: ID
+  genre: Genre
+  genreId: ID
+  id: ID
+}
+
+type GameImage {
+  cloudinaryId: String
+  url: String
+}
+
+input GameInput {
+  description: String
+  gameCovers: [GameCoverInput]
+  gameLinks: [GameLinkInput]
+  gameReleaseDates: [GameReleaseDateInput]
+  gameScreenshots: [GameScreenshotInput]
+  gameStores: [GameStoreInput]
+  name: String!
+}
+
+input GameLinkInput {
+  gameId: ID
+  id: ID
+  type: LinkType!
+  url: String!
+}
+
+type GameReleaseDate {
+  date: Int
+  platform: String
+}
+
+input GameReleaseDateInput {
+  date: String
+  gameId: ID
+  id: ID
+  platformId: ID!
+  precision: PrecisionType!
+  region: RegionType!
+}
+
+input GameScreenshotInput {
+  caption: String
+  gameId: ID!
+  id: ID
+  path: String!
+}
+
+type GameStore {
+  gameId: ID
+  id: ID
+  store: Store
+  storeId: ID
+  url: String
+}
+
+input GameStoreInput {
+  gameId: ID!
+  id: ID
+  storeId: ID!
+  url: String!
+}
+
+type GameVideo {
+  name: String
+  videoId: String
+}
+
+type GameWithStatus {
+  game: Game
+  playStatus: PlayStatus
+}
+
+type Genre {
+  description: String
+  id: ID
+  name: String
+  slug: String
+}
+
+type Link {
+  gameId: ID
+  id: ID
+  type: LinkType
+  url: String
+}
+
+enum LinkType {
+  DISCORD
+  FACEBOOK
+  INSTAGRAM
+  OFFICIAL
+  TWITCH
+  TWITTER
+  WIKIPEDIA
+  YOUTUBE
+}
+
+type List {
+  description: String
+  gameCount: Int
+  games: [Game]
+  headerImage: String
+  id: Int
+  insertedAt: String
+  likedByCurrentUser: Boolean
+  likesCount: Int
+  listGames: [ListGame]
+  pinned: Boolean
+  playedCount: Int
+  position: Int
+  private: Boolean
+  ranked: Boolean
+  slug: String
+  title: String
+  token: String
+  updatedAt: String
+  user: User
+}
+
+input ListFilter {
+  ranked: Boolean
+  title: String
+  userId: Int
+}
+
+type ListGame {
+  game: Game
+  gameId: Int
+  id: Int
+  insertedAt: String
+  note: String
+  playedByCurrentUser: Boolean
+  rank: Int
+}
+
+input ListGameInput {
+  gameId: Int!
+  note: String
+  rank: Int!
+}
+
+input ListGameOrder {
+  direction: SortOrder = ASC
+  field: ListGameOrderValue = RANK
+}
+
+enum ListGameOrderValue {
+  CREATED
+  GAME_NAME
+  RANK
+}
+
+input ListInput {
+  description: String
+  private: Boolean
+  ranked: Boolean
+  title: String!
+}
+
+input ListOrder {
+  direction: SortOrder = DESC
+  field: OrderValue = CREATED
+}
+
+input MinMaxFloat {
+  max: Float
+  min: Float
+}
+
+enum OrderValue {
+  CREATED
+  LIKES
+  TITLE
+}
+
+type PaymentSource {
+  brand: String
+  expMonth: Int
+  expYear: Int
+  last4: String
+}
+
+type Plan {
+  description: String
+  interval: String
+  name: String
+  price: Int
+}
+
+type Platform {
+  ggdbId: ID
+  id: ID
+  name: String
+}
+
+input PlatformFilter {
+  name: String
+}
+
+type PlayStatus {
+  description: String
+  id: Int
+  title: String
+}
+
+enum PrecisionType {
+  DAY
+  MONTH
+  QUARTER
+  TBD
+  YEAR
+}
+
+type PromoCode {
+  code: String
+  description: String
+  discountAmount: Int
+  discountType: String
+}
+
+type Rating {
+  game: Game
+  id: Int
+  insertedAt: String
+  updatedAt: String
+  user: User
+  value: Float
+}
+
+input RatingFilter {
+  gameId: Int
+  userId: Int
+  value: MinMaxFloat
+}
+
+input RatingOrder {
+  direction: SortOrder = DESC
+  field: RatingOrderValue = CREATED
+}
+
+enum RatingOrderValue {
+  CREATED
+  GAME_NAME
+  VALUE
+}
+
+type RatingValueCount {
+  count: Int
+  value: Float
+}
+
+enum RegionType {
+  ASIA
+  AUSTRALIA
+  CHINA
+  EUROPE
+  JAPAN
+  NEW_ZEALAND
+  NORTH_AMERICA
+  WORLDWIDE
+}
+
+type ReleaseDate {
+  date: String
+  gameId: ID
+  id: ID
+  platform: Platform
+  platformId: ID
+  precision: PrecisionType
+  region: RegionType
+}
+
+type Review {
+  body: String
+  game: Game
+  id: Int
+  insertedAt: String
+  likedByCurrentUser: Boolean
+  likesCount: Int
+  pinned: Boolean
+  ratingValue: Float
+  token: String
+  updatedAt: String
+  user: User
+}
+
+input ReviewFilter {
+  gameId: Int
+  minLength: Int
+  rating: MinMaxFloat
+  ratingValue: Float
+  userId: Int
+}
+
+input ReviewOrder {
+  direction: SortOrder = DESC
+  field: ReviewOrderValue = LIKES
+}
+
+enum ReviewOrderValue {
+  CREATED
+  LIKES
+  PINNED
+  RATING
+}
+
+type RootMutationType {
+  addGameToBacklog(gameId: Int): BacklogGame
+  addGameToList(gameId: Int, listId: Int): String
+  addGameToWishlist(gameId: Int): WishlistGame
+  cancelSubscription: SubscriptionItem
+  cloneList(id: Int!): List
+  createList(list: ListInput): List
+  createReview(body: String, gameId: Int!, ratingValue: Float): Review
+  deleteAccount: String
+  deleteList(id: Int!): String
+  deletePaymentSource: String
+  deleteReview(id: Int!): String
+  editList(id: Int!, list: ListInput): List
+  followUser(followeeId: Int!): String
+  forgotPassword(usernameOrEmail: String!): String
+  mergeLists(destinationId: Int!, sourceId: Int!): String
+  pinList(id: Int!): List
+  pinReview(id: Int!): Review
+  registerUser(email: String!, password: String!, passwordConfirmation: String, username: String!): UserWithToken
+  removeGameFromBacklog(gameId: Int): String
+  removeGameFromList(gameId: Int, listId: Int): String
+  removeGameFromWishlist(gameId: Int): String
+  requestGameImageUpload(fileName: String, id: ID): String
+  requestImageUpload(fileName: String!): String
+  resendVerificationEmail: String
+  resetPassword(password: String!, passwordConfirmation: String!, resetToken: String!): String
+  sendFeedback(body: String!, subject: String!): String
+  sendVerificationEmail(email: String): String
+  setListPositions(listIds: [Int]): [List]
+  setPlayStatus(gameId: Int!, playStatusId: Int!): UserGamePlayStatus
+  setProfileBackground(profileBackground: String): User
+  setRating(gameId: Int!, value: Float): Rating
+  signIn(password: String!, username: String!): UserWithToken
+  submitGameRevision(id: ID, input: GameInput): String
+  submitNewGame(input: GameInput): String
+  subscribeToNewsletter(id: Int!): String
+  subscribeToPlan(interval: String!, plan: String!, promoCode: String): UserWithToken
+  toggleListLike(id: Int!): List
+  toggleReviewLike(id: Int!): Review
+  unfollowUser(followeeId: Int!): String
+  unpinList(id: Int!): List
+  unpinReview(id: Int!): Review
+  unsubscribeFromNewsletter(id: Int!): String
+  updateEmailAddress(email: String!): User
+  updateListGames(listGames: [ListGameInput], listId: Int!): String
+  updateNewsletterStatus(email: String!, listId: String!): String
+  updatePaymentSource(sourceToken: String!): PaymentSource
+  updateReview(body: String, id: Int!, ratingValue: Float): Review
+  updateUserProfile(bio: String, displayName: String, kfbf: Boolean): User
+  updateUsername(username: String!): User
+  validateEmailAddress(email: String!): String
+  verifyAccount(verificationToken: String!): String
+  verifyEmailAddress(verificationToken: String!): String
+}
+
+type RootQueryType {
+  backlogContainsGame(gameId: Int): Boolean
+  backlogCount(filter: BacklogFilter): Int
+  backlogGames(filter: BacklogFilter, limit: Int, offset: Int, order: BacklogOrder): [BacklogGame]
+  collectionGames(filter: CollectionFilter, limit: Int, offset: Int, order: CollectionOrder): [CollectionGame]
+  collectionPlatforms(userId: ID): [Platform]
+  countUsersPlayedGame(id: ID): Int
+  currentPlan: Plan
+  eliteSubscribers: [User]
+  gameCount(collections: [ID], userId: ID): Int
+  gamesForList(limit: Int, listId: ID!, offset: Int, order: ListGameOrder): [ListGame]
+  getActivityItem(id: Int): Activity
+  getAverageRating(gameId: Int): AverageRating
+  getCurrentUser: User
+  getFollowerCount(userId: Int!): Int
+  getFollowingCount(userId: Int!): Int
+  getGame(id: ID): Game
+  getGameBySlug(slug: String): Game
+  getGameByToken(token: String): Game
+  getGamePlayStatus(gameId: ID!): UserGamePlayStatus
+  getHomeFeed(keyset: Int, offset: Int): [Activity]
+  getList(id: Int, slug: String): List
+  getListsByGame(cursor: Int, gameId: Int, limit: Int, offset: Int, order: ListOrder): [List]
+  getPromoCode(code: String!): PromoCode
+  getRatings(filter: RatingFilter, limit: Int, offset: Int, order: RatingOrder): [Rating]
+  getRatingsCount(filter: RatingFilter): Int
+  getReview(id: Int, token: String): Review
+  getReviews(gameId: Int, limit: Int, minLength: Int, ratingValue: Float, userId: Int): [Review]
+  getReviewsCount(gameId: Int, ratingValue: Float, userId: Int): Int
+  getUser(userId: ID, username: String): User
+  getUserFeed(keyset: Int, offset: Int, userId: ID): [Activity]
+  getUserLists(userId: Int): [List]
+  getUserRating(gameId: Int): Rating
+  isFollowingUser(followeeId: Int!): Boolean
+  latestMobileVersion: String
+  listCount(filter: ListFilter): Int
+  listFollowees(offset: Int, userId: Int): [Follower]
+  listFollowers(offset: Int, userId: Int): [Follower]
+  listGames(limit: Int, search: String): [Game]
+  listGamesForAllStatuses(limit: Int): [Game]
+  listGamesForStatus(playStatusId: ID!): [Game]
+  listGamesForStatuses(limit: Int, offset: Int, statusIds: [ID], userId: ID): [GameWithStatus]
+  listPlayStatuses: [PlayStatus]
+  listTopPlaying: [Game]
+  listTrendingGames: [Game]
+  listUsers(search: String): [User]
+  lists(filter: ListFilter, limit: Int, offset: Int, order: ListOrder): [List]
+  listsContainGame(gameId: Int): Boolean
+  listsContainingGame(gameId: ID!): [Int]
+  listsFromFriends(cursor: Int, filter: ListFilter, limit: Int, order: ListOrder): [List]
+  paymentSource: PaymentSource
+  ping: String
+
+  """The list of available platforms"""
+  platforms(filter: PlatformFilter): [Platform]
+  randomGameFromStatus(statusId: ID!): GameWithStatus
+  ratingSpread(gameId: Int, userId: Int): [RatingValueCount]
+  reviews(filter: ReviewFilter, limit: Int, order: [ReviewOrder]): [Review]
+  reviewsCount(filter: ReviewFilter): Int
+  reviewsFromFriends(filter: ReviewFilter, limit: Int, order: [ReviewOrder]): [Review]
+  searchGames(term: String): [Game]
+
+  """The list of available stores"""
+  stores(filter: StoreFilter): [Store]
+  subscription: Sub
+  trendingAmongFriends: [Game]
+  usernameAvailable(username: String!): UsernameValidation
+  usersPlayingGame(id: ID): [User]
+  wishlistContainsGame(gameId: Int): Boolean
+  wishlistCount(filter: WishlistFilter): Int
+  wishlistGames(filter: WishlistFilter, limit: Int, offset: Int, order: WishlistOrder): [WishlistGame]
+}
+
+type Screenshot {
+  caption: String
+  gameId: ID
+  id: ID
+  path: String
+}
+
+enum SortOrder {
+  ASC
+  DESC
+}
+
+type Store {
+  ggdbId: ID
+  id: ID
+  name: String
+}
+
+input StoreFilter {
+  name: String
+}
+
+type Sub {
+  entitlementId: String
+  expirationAt: String
+  store: String
+}
+
+type SubscriptionItem {
+  status: String
+}
+
+type User {
+  bio: String
+  displayName: String
+  email: String
+  followedByCurrentUser: Boolean
+  gravatarHash: String
+  id: Int
+  insertedAt: String
+  kfbf: Boolean
+  profileBackground: String
+  profileImageName: String
+  role: String
+  username: String
+  verified: Boolean
+}
+
+type UserGamePlayStatus {
+  gameId: Int
+  id: Int
+  playStatusId: Int
+  userId: Int
+}
+
+type UsernameValidation {
+  desc: String
+  msg: String
+  reason: String
+  valid: Boolean
+}
+
+type UserWithToken {
+  authToken: String
+  user: User
+}
+
+input WishlistFilter {
+  gameId: ID
+  platforms: [ID]
+  userId: ID
+}
+
+type WishlistGame {
+  game: Game
+  gameId: Int
+  id: Int
+  position: Int
+}
+
+input WishlistOrder {
+  direction: SortOrder = DESC
+  field: WishlistOrderValue = POSITION
+}
+
+enum WishlistOrderValue {
+  GAME_NAME
+  POSITION
+}
+
